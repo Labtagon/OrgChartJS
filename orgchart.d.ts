@@ -1,7 +1,7 @@
 
 
 declare namespace OrgChart {
-    
+
     enum orientation {
         top,
         left,
@@ -28,7 +28,7 @@ declare namespace OrgChart {
         /**
          * nodeMouseClick value
          */
-        edit, 
+        edit,
         /**
          * nodeMouseClick and nodeMouseDbClick value
          */
@@ -36,7 +36,7 @@ declare namespace OrgChart {
         /**
          * nodeMouseClick and nodeMouseDbClick value
          */
-        expandCollapse, 
+        expandCollapse,
         /**
          * nodeMouseClick, nodeMouseDbClick and mouseScrool value
          */
@@ -102,21 +102,21 @@ declare namespace OrgChart {
 
     const CENTER: any;
     const ORIENTATION: any;
-    
+
     const COLLAPSE: any;
     const EXPAND: any;
 
     const COLLAPSE_PARENT_NEIGHBORS: any;
     const COLLAPSE_SUB_CHILDRENS: any;
 
-    const normal: any;  
+    const normal: any;
     const mixed: any;
     const tree: any;
     const treeLeftOffset: any;
     const treeRightOffset: any;
 
     const slinkTemplates: any;
-    
+
 }
 
 interface Menu {
@@ -946,7 +946,7 @@ Code example:
     onRedraw?: string,
     onImageUploaded?: string,
     onUpdateTags?: string,
-    onClick?: string,
+    onClick?: ((sender: OrgChart, event: NodeEvent<MouseEvent>) => boolean),
     onDbClick?: string,
     onExpCollClick?: string,
     onExportStart?: string,
@@ -956,7 +956,10 @@ Code example:
 
 }
 
-
+interface NodeEvent<T> {
+    node: Object
+    event: T
+}
 
 declare class OrgChart {
     constructor(element: HTMLElement, options: OrgChartOptions);
@@ -979,7 +982,7 @@ declare class OrgChart {
 Will update the node with id 4 and will redraw the chart.
      * @param nodeJSONdata 
      */
-    updateNode(nodeJSONdata: Object) : void;
+    updateNode(nodeJSONdata: Object): void;
 
     /**
      * Updates the node JSON object.
@@ -1001,9 +1004,9 @@ Will find the node with id 4 but it will not redraw the chart, you can use this 
 
      * @param nodeJSONdata 
      */
-    update(nodeJSONdata: Object) : void;
+    update(nodeJSONdata: Object): void;
 
-    
+
 
     /**
      *Removes specified node from nodes collection.
@@ -1023,7 +1026,7 @@ Code example:
 Will remove node with id 5 and will redraw the chart.
      * @param nodeId 
      */
-    removeNode(nodeId: string | number): void;    
+    removeNode(nodeId: string | number): void;
 
     /**
      *Removes specified node from nodes collection.
@@ -1045,7 +1048,7 @@ Will remove node with id 5 but it will not redraw the chart, you can use this me
 
      * @param nodeId 
      */
-    remove(nodeId: string | number): void;   
+    remove(nodeId: string | number): void;
 
     /**
      * Adds new node to the nodes collection.
@@ -1065,7 +1068,7 @@ Code example:
 Will add new node and will redraw the chart.
      * @param nodeJSONdata 
      */
-    addNode(nodeJSONdata: Object) : void;
+    addNode(nodeJSONdata: Object): void;
 
     /**
      * Adds new node to the nodes collection.
@@ -1085,7 +1088,7 @@ Code example:
 Will add new node but it will not redraw the chart, you can use this method when you need add two or more nodes, then call the draw function.
      * @param nodeJSONdata 
      */
-    add(nodeJSONdata: Object) : void;
+    add(nodeJSONdata: Object): void;
     /**
      * Adds tag to the tags config collection.
 
@@ -1105,7 +1108,7 @@ Code example:
          * @param name 
      * @param tag 
      */
-    addTag(name: string, tag: Object) : void;
+    addTag(name: string, tag: Object): void;
 
     /**
      * Removes tag from the tags config collection.
@@ -1123,8 +1126,8 @@ Code example:
         ```
      * @param name 
      */
-    removeTag(name: string) : void;
-    
+    removeTag(name: string): void;
+
     /**
      * Adds tag to the node tags collection.
 
@@ -1144,7 +1147,7 @@ Code example:
          * @param nodeId 
      * @param tagName 
      */
-    addNodeTag(nodeId: string | number, tagName: string) : void;
+    addNodeTag(nodeId: string | number, tagName: string): void;
 
     /**
      *Removes tag from the node tags collection.
@@ -1165,7 +1168,7 @@ Code example:
          * @param nodeId 
      * @param tagName 
      */
-    removeNodeTag(nodeId: string | number, tagName: string) : void;
+    removeNodeTag(nodeId: string | number, tagName: string): void;
 
     /**
      * Groups two nodes into a group.
@@ -1188,7 +1191,7 @@ Code example:
      * @param targetNodeId 
      * @param name 
      */
-    groupNode(sourceNodeId: string | number, targetNodeId: string | number, name: string ) : void;
+    groupNode(sourceNodeId: string | number, targetNodeId: string | number, name?: string): void;
 
     /**
      * Groups two nodes into a group.
@@ -1212,7 +1215,7 @@ Code example:
      * @param targetNodeId 
      * @param name 
      */
-    group(sourceNodeId: string | number, targetNodeId: string | number, name: string) : void;
+    group(sourceNodeId: string | number, targetNodeId: string | number, name?: string): void;
 
     /**
      * Adds a link between two nodes.
@@ -1257,7 +1260,7 @@ It will create a link from node 5 to node 6 and will redraw the chart.
      * @param fromNodeId 
      * @param toNodeId 
      */
-    linkNode(fromNodeId: string | number, toNodeId: string | number) : void;
+    linkNode(fromNodeId: string | number, toNodeId: string | number): void;
 
     /**
      * Center specified node on the screen.
@@ -1284,7 +1287,7 @@ Code example:
      * @param nodeId 
      * @param options 
      */
-    center(nodeId: string | number, options: Object) : void;
+    center(nodeId: string | number, options: Object): void;
 
     /**
      * Animate specified node with ripple animation - highlight the node.
@@ -1303,7 +1306,7 @@ Code example:
 ```
         * @param nodeId 
      */
-    ripple(nodeId: string | number) : void;
+    ripple(nodeId: string | number): void;
 
     /**
      * Gets the current scale of the chart.
@@ -1317,7 +1320,7 @@ Code example:
         var scale = chart.getScale();
    ```
         */
-    getScale() : number;
+    getScale(): number;
 
     /**
      * Zoom out or zoom in the chart.
@@ -1340,7 +1343,7 @@ Code example:
      * @param center 
      * @param [anim] 
      */
-    zoom(delta: boolean | number, center: Array<number>, anim? : boolean) : void;
+    zoom(delta: boolean | number, center?: Array<number>, anim?: boolean): void;
 
     /**
      * Exports the chart to svg file.
@@ -1363,7 +1366,7 @@ Code example:
      * @param expandChildren 
      * @param nodeId 
      */
-    exportSVG(filename: string, expandChildren: boolean, nodeId: string | number ) : void;
+    exportSVG(filename?: string, expandChildren?: boolean, nodeId?: string | number): void;
 
     /**
      * Exports the chart to png file.
@@ -1389,7 +1392,7 @@ Code example:
  ```
         * @param options 
      */
-    exportPNG(options: Object) : void;
+    exportPNG(options: Object): void;
 
     /**
      * Exports the chart to pdf file.
@@ -1418,7 +1421,7 @@ Code example:
    ``` 
      * @param options 
      */
-    exportPDF(options: Object) : void;
+    exportPDF(options: Object): void;
 
     /**
      * Exports the chart to CSV file.
@@ -1441,26 +1444,26 @@ Code example:
    ```
         * @param options 
      */
-    exportCSV(options: Object) : void;
+    exportCSV(options: Object): void;
 
-        /**
-     * Exports the chart to XML file.
+    /**
+ * Exports the chart to XML file.
 
 Signature:
 ``` 
-        chart.exportXML(filename);
-   ``` 
+    chart.exportXML(filename);
+``` 
 Parameters:
 
 - filename - the name of the file
 
 Code example:
 ``` 
-        chart.exportXML("MyOrgChart.svg");
-   ```
-        * @param filename 
-     */
-    exportXML(filename: string) : void;
+    chart.exportXML("MyOrgChart.svg");
+```
+    * @param filename 
+ */
+    exportXML(filename: string): void;
 
     /**
      * Draws the chart.
@@ -1492,7 +1495,7 @@ Code example:
          chart.importCSV();
  ```
          */
-    importCSV() : void;
+    importCSV(): void;
 
     /**
      * Import XML file.
@@ -1506,7 +1509,7 @@ Code example:
         chart.importXML();
    ```
         */
-    importXML() : void;
+    importXML(): void;
 
     /**
      * Draws the chart.
@@ -1525,7 +1528,7 @@ Code example:
    ```
         * @param [action] 
      */
-    draw(action? : OrgChart.action) : void;
+    draw(action?: OrgChart.action): void;
 
     /**
      * Expand specified nodes.
@@ -1548,7 +1551,7 @@ Code example:
      * @param ids 
      * @param [callback] 
      */
-    expand(id: string | number, ids: Array<string | number>, callback?: Function) : void;
+    expand(id: string | number, ids: Array<string | number>, callback?: Function): void;
 
     /**
      * Collapse specified nodes.
@@ -1571,7 +1574,7 @@ Code example:
      * @param ids 
      * @param [callback] 
      */
-    collapse(id: string | number, ids: Array<string | number>, callback?: Function) : void;
+    collapse(id: string | number, ids: Array<string | number>, callback?: Function): void;
 
     /**
      * Fits the content to the visible area.
@@ -1604,7 +1607,7 @@ Code example:
  ```
          * @param value 
      */
-    find(value: string | number) : void;
+    find(value: string | number): void;
 
     /**
      * Load nodes.
@@ -1619,7 +1622,7 @@ Code example:
  ```
      * @param jsonArray 
      */
-    load(jsonArray: Array<Object>) : void;
+    load(jsonArray: Array<Object>): void;
 
     /**
      *Load nodes from xml.
@@ -1634,7 +1637,7 @@ Code example:
    ```
         * @param xmlAsText 
      */
-    loadXML(xmlAsText: string) : void;
+    loadXML(xmlAsText: string): void;
 
     /**
      * Gets nodes as xml.
@@ -1651,7 +1654,7 @@ Code example:
     
      * @returns xml 
      */
-    getXML() : string;
+    getXML(): string;
 
     /**
      * Adds clink.
@@ -1673,7 +1676,7 @@ Code example:
      * @param label 
      * @param template 
      */
-    addClink(fromId: string | number, toId: string | number, label: string, template: string) : void;
+    addClink(fromId: string | number, toId: string | number, label: string, template: string): void;
 
     /**
      * Removes clink.
@@ -1713,7 +1716,7 @@ Code example:
      * @param expand 
      * @param callback 
      */
-    expandCollapseToLevel(id: string | number, collapse: Object, expand: Object, callback: Function) : void; // How works this one ?
+    expandCollapseToLevel(id: string | number, collapse: Object, expand: Object, callback: Function): void; // How works this one ?
 
 
     /**
@@ -1742,7 +1745,7 @@ Code example:
      * @param label 
      * @param template 
      */
-    addSlink(fromId: string | number, toId: string | number, label: string, template: string) : void;
+    addSlink(fromId: string | number, toId: string | number, label: string, template: string): void;
 
 
     /**
@@ -1759,5 +1762,5 @@ Code example:
         * @param fromId 
      * @param toId 
      */
-    removeSlink(fromId: string | number, toId: string | number) : void;
+    removeSlink(fromId: string | number, toId: string | number): void;
 }
